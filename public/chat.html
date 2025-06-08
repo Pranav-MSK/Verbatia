@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Realtime Chat</title>
+  <title>Verbatia</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <h2>Realtime Chat Room</h2>
-  <div id="chat-window" style="border:1px solid #ccc; height:300px; overflow-y:auto; padding:10px; margin-bottom:10px;">
-    <!-- Messages will appear here -->
+<body class="chat-body">
+
+  <button class="logout-btn" onclick="logout()">Logout</button>
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider"></span>
+    </label>
   </div>
 
-  <input type="text" id="message-input" placeholder="Type your message..." />
-  <button onclick="sendMessage()">Send</button>
-  <button onclick="logout()">Logout</button>
+  <h2 style="text-align:center;">Verbatia</h2>
+  <h3 style="text-align: center; justify-content: center;">A Public Chat Room</h3><br>
+
+  <div id="chat-window"><!-- Messages will appear here --></div>
+
+  <div id="message-container">
+    <input type="text" id="message-input" placeholder="Message"><button class="send-btn" onclick="sendMessage()">Send</button>
+  </div>
 
   <!-- Firebase SDKs -->
   <script type="module" src="chat.js"></script>
