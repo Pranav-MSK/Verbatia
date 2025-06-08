@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Realtime Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>Realtime Chat Room</h2>
+  <div id="chat-window" style="border:1px solid #ccc; height:300px; overflow-y:auto; padding:10px; margin-bottom:10px;">
+    <!-- Messages will appear here -->
+  </div>
+
+  <input type="text" id="message-input" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+  <button onclick="logout()">Logout</button>
+
+  <!-- Firebase SDKs -->
+  <script type="module" src="chat.js"></script>
+</body>
+</html>
