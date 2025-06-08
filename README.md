@@ -148,9 +148,9 @@ service cloud.firestore {
 ## 📧 Author
 
 - **Name:** Pranav M S Krishnan  
-- **GitHub:** [@Pranav-MSK](https://github.com/Pranav-MSK)  
-- **Repo:** [verbatia-app](https://github.com/Pranav-MSK/Verbatia)  
-- **Live Site:** [https://verbatia-app.web.app](https://realtimechatapp-d92ab.web.app/) 
+- **GitHub:** Pranav-MSKhttps://github.com/Pranav-MSK 
+- **Repo:** https://github.com/Pranav-MSK/Verbatia 
+- **Live Site:** https://realtimechatapp-d92ab.web.app
 
 ---
 
