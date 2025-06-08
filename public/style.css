@@ -258,14 +258,14 @@ button.logout-btn:hover { background: #c9302c; transform: translateY(-1px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.msg-username  { font-weight: bold; margin-bottom: 2px; color: #333; }
-.msg-text      { font-size: 15px; margin-bottom: 4px; }
-.msg-timestamp { font-size: 12px; color: #888; text-align: right; }
+.msg-username  { font-size: 12px; font-weight: bold; margin-bottom: 2px; color: #333; }
+.msg-text      { font-size: 14px; margin-bottom: 4px; }
+.msg-timestamp { font-size: 10px; color: #888; text-align: right; }
 
 .date-divider {
   text-align: center;
   margin: 15px 0;
-  font-size: 14px;
+  font-size: 10px;
   color: #666;
   font-weight: 600;
   background: #e0e0e0;
@@ -310,6 +310,90 @@ button.logout-btn:hover { background: #c9302c; transform: translateY(-1px); }
   #message-input  { width: 100%; }
 }
 
+/* Edit & Delete buttons container inside message bubble */
+.msg-actions {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  pointer-events: none; /* prevent clicking when invisible */
+}
+
+/* Show buttons only on hover of message bubble, after 1.5s delay */
+.message-bubble:hover .msg-actions {
+  animation: fadeInDelay 0.3s forwards;
+  pointer-events: auto;
+}
+
+/* Keyframes for delayed fade-in */
+@keyframes fadeInDelay {
+  0% { opacity: 0; }
+  70% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Style buttons as text links, distinct from general buttons */
+.msg-actions button {
+  all: unset; /* reset all button styles */
+  cursor: pointer;
+  color: #4a90e2;
+  font-weight: 600;
+  padding: 0 6px;
+  border-radius: 4px;
+  transition: color 0.25s ease;
+  user-select: none;
+}
+
+/*-----------------------Edit and Delete buttons styling------------------*/
+/* Hover and focus states */
+.msg-actions button:hover,
+.msg-actions button:focus {
+  color: #357abd;
+  text-decoration: underline;
+}
+
+/* Differentiate edit and delete colors */
+.msg-actions button:first-child {
+  color: #2a8fbd; /* edit button blue */
+}
+
+.msg-actions button:first-child:hover,
+.msg-actions button:first-child:focus {
+  color: #176d94;
+}
+
+.msg-actions button:last-child {
+  color: #d9534f; /* delete button red */
+}
+
+.msg-actions button:last-child:hover,
+.msg-actions button:last-child:focus {
+  color: #b52e2e;
+}
+
+/* Dark mode overrides */
+body.dark .msg-actions button:first-child {
+  color: #6aa7f0; /* lighter blue for dark mode */
+}
+
+body.dark .msg-actions button:first-child:hover,
+body.dark .msg-actions button:first-child:focus {
+  color: #3e7ccc;
+}
+
+body.dark .msg-actions button:last-child {
+  color: #ef736f; /* lighter red for dark mode */
+}
+
+body.dark .msg-actions button:last-child:hover,
+body.dark .msg-actions button:last-child:focus {
+  color: #d85e5b;
+}
+
+
 /* ---------------------------------------------------------
    Toggle-switch styling
 --------------------------------------------------------- */
@@ -343,7 +427,7 @@ body.dark #message-input:focus { border-color: #6aa7f0; box-shadow: 0 0 0 3px rg
 /* Buttons */
 body.dark button,
 body.dark button.send-btn { background: #6aa7f0; color: #fff; }
-body.dark button:hover,
+body.dark button:hover {background:#3e7ccc;}
 body.dark button.send-btn:hover { background: #4f8ad4; }
 
 /* Logout & danger buttons */

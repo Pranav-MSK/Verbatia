@@ -3,27 +3,70 @@
 <head>
   <title>Verbatia</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- ── small inline styles just for the new panel ── -->
+  <style>
+    /* sidebar panel */
+    #online-users{
+      position:fixed;
+      top:80px;            /* sits just below the logout button */
+      left:15px;
+      width:180px;
+      max-height:60vh;
+      overflow-y:auto;
+      padding:10px;
+      background:#ffffff;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      box-shadow:0 2px 4px rgba(0,0,0,.1);
+      font-size:14px;
+      z-index:900;
+    }
+    #online-users h4{margin:0 0 6px;text-align:center;font-size:15px;color:#000}
+    #online-users ul{margin:0;padding:0;list-style:none;}
+    #online-users li{margin:4px 0;color:#4bda44ef}
+
+    /* dark-mode overrides */
+    body.dark #online-users{
+      background:#1c1f24;
+      border-color:#37404a;
+      color:#4bda44ef;
+    }
+    body.dark #online-users h4{color:#ffffff}
+  </style>
 </head>
+
 <body class="chat-body">
 
+  <!-- logout button already fixed top-left -->
   <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <!-- online users sidebar -->
+  <div id="online-users">
+    <h4>Online users</h4>
+    <ul id="online-list">Loading....</ul>
+  </div>
+
+  <!-- dark-mode toggle (unchanged) -->
   <div class="theme-toggle">
+    Dark Mode
     <label class="switch">
-      <input type="checkbox" id="theme-toggle">
+      <input type="checkbox" id="theme-toggle">Off/On
       <span class="slider"></span>
     </label>
   </div>
 
   <h2 style="text-align:center;">Verbatia</h2>
-  <h3 style="text-align: center; justify-content: center;">A Public Chat Room</h3><br>
+  <h3 style="text-align:center;">A Public Chat Room</h3><br>
 
-  <div id="chat-window"><!-- Messages will appear here --></div>
+  <div id="chat-window"><!-- messages will appear here --></div>
 
   <div id="message-container">
-    <input type="text" id="message-input" placeholder="Message"><button class="send-btn" onclick="sendMessage()">Send</button>
+    <input type="text" id="message-input" placeholder="Message" autofocus>
+    <button class="send-btn" onclick="sendMessage()">Send</button>
   </div>
 
-  <!-- Firebase SDKs -->
+  <!-- Firebase / app script -->
   <script type="module" src="chat.js"></script>
 </body>
 </html>
