@@ -128,17 +128,6 @@ service cloud.firestore {
 
 ---
 
-## 📷 UI Snapshots
-
-> Add image links here or drag and drop screenshots
-
-```markdown
-![Login Page](./screenshots/login.png)
-![Chat Interface](./screenshots/chat.png)
-```
-
----
-
 ## 🧠 Future Improvements
 
 - 🔒 Private/group chat support
