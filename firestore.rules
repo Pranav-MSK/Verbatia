@@ -2,13 +2,31 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Only authenticated users can read/write messages
+
+    // Realtime chat messages
     match /messages/{messageId} {
-      allow read, write: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+                    && request.resource.data.text is string
+                    && request.resource.data.text.size() <= 100
+                    && request.resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null
+                && request.resource.data.text is string
+                && request.resource.data.text.size() <= 100
+                && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if request.auth != null
+                            && resource.data.uid == request.auth.uid;
     }
 
-    // Deny all other reads/writes by default
+
+    // Presence system
+    match /usersOnline/{userId} {
+      // Only allow users to write to *their own* online doc
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Deny everything else
     match /{document=**} {
       allow read, write: if false;
     }

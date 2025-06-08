@@ -71,6 +71,13 @@ setPersistence(auth, browserLocalPersistence).catch(console.error);
 const chatWindow = document.getElementById("chat-window");
 const messageInput = document.getElementById("message-input");
 const onlineListEl = document.getElementById("online-list");
+const charCounter = document.getElementById("char-counter");
+
+messageInput.addEventListener("input", () => { //
+  const remaining = 100 - messageInput.value.length;
+  charCounter.textContent = `${remaining} (100)`;
+  charCounter.classList.toggle("warning", remaining < 10);
+});
 
 let currentUserUid = null;
 let onlineRef      = null;
@@ -134,6 +141,11 @@ onAuthStateChanged(auth, async (user) => {
   /* ---------- listen for messages ---------- */
   const q = query(collection(db, "messages"), orderBy("createdAt"));
   onSnapshot(q, (snapshot) => {
+    const loader = document.getElementById("chat-loader");
+    if (loader) {
+      loader.classList.add("fade-out");
+      setTimeout(() => loader.remove(), 400);
+    }
     chatWindow.innerHTML = "";
     let lastDate = "";
 

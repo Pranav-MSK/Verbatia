@@ -200,6 +200,26 @@ body.chat-body h3 {
   outline: none;
 }
 
+.char-counter {
+  font-size: 12px;
+  color: #666;
+  margin-top: 30px;
+  margin-left: 4px;
+  align-self: flex-start;
+}
+
+.char-counter.warning {
+  color: #d9534f;
+}
+
+/* Dark mode */
+body.dark .char-counter {
+  color: #aaa;
+}
+body.dark .char-counter.warning {
+  color: #ef736f;
+}
+
 /* Send button */
 button.send-btn {
   height: 48px; /* Match message input height */
@@ -301,7 +321,15 @@ button.logout-btn:hover { background: #c9302c; transform: translateY(-1px); }
   .buttons { flex-direction: column; }
   button   { width: 100%; }
 
-  button.send-btn { width: 2rem; }
+    button.send-btn,
+  #message-input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .msg-actions button {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -313,19 +341,23 @@ button.logout-btn:hover { background: #c9302c; transform: translateY(-1px); }
 /* Edit & Delete buttons container inside message bubble */
 .msg-actions {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease 0.5s all 0.4s;
   font-size: 12px;
   margin-top: 4px;
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
   justify-content: flex-end;
   pointer-events: none; /* prevent clicking when invisible */
+  overflow:hidden;
 }
 
 /* Show buttons only on hover of message bubble, after 1.5s delay */
 .message-bubble:hover .msg-actions {
   animation: fadeInDelay 0.3s forwards;
   pointer-events: auto;
+  height:auto;
+  opacity:1;
 }
 
 /* Keyframes for delayed fade-in */
@@ -335,6 +367,9 @@ button.logout-btn:hover { background: #c9302c; transform: translateY(-1px); }
   100% { opacity: 1; }
 }
 
+/*------------------------------------------------------
+          Edit and Delete buttons styling
+---------------------------------------------------------*/
 /* Style buttons as text links, distinct from general buttons */
 .msg-actions button {
   all: unset; /* reset all button styles */
@@ -347,7 +382,6 @@ button.logout-btn:hover { background: #c9302c; transform: translateY(-1px); }
   user-select: none;
 }
 
-/*-----------------------Edit and Delete buttons styling------------------*/
 /* Hover and focus states */
 .msg-actions button:hover,
 .msg-actions button:focus {
@@ -376,21 +410,77 @@ button.logout-btn:hover { background: #c9302c; transform: translateY(-1px); }
 
 /* Dark mode overrides */
 body.dark .msg-actions button:first-child {
-  color: #6aa7f0; /* lighter blue for dark mode */
+  color: #2f58eb; /* lighter blue for dark mode */
 }
 
 body.dark .msg-actions button:first-child:hover,
 body.dark .msg-actions button:first-child:focus {
-  color: #3e7ccc;
+  color: #0015ff;
 }
 
 body.dark .msg-actions button:last-child {
-  color: #ef736f; /* lighter red for dark mode */
+  color: #e80c0c; /* lighter red for dark mode */
 }
 
 body.dark .msg-actions button:last-child:hover,
 body.dark .msg-actions button:last-child:focus {
   color: #d85e5b;
+}
+
+body.dark .msg-actions button:hover, button:focus{
+  background:#fff;
+}
+
+/* sidebar panel */
+#online-users{
+  position:fixed;
+  top:80px;            /* sits just below the logout button */
+  left:15px;
+  width:180px;
+  max-height:60vh;
+  overflow-y:auto;
+  padding:10px;
+  background:#ffffff;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  box-shadow:0 2px 4px rgba(0,0,0,.1);
+  font-size:14px;
+  z-index:900;
+}
+#online-users h4{margin:0 0 6px;text-align:center;font-size:15px;color:#000}
+#online-users ul{margin:0;padding:0;list-style:none;}
+#online-users li{margin:4px 0;color:#4bda44ef}
+
+/* dark-mode overrides */
+body.dark #online-users{
+  background:#1c1f24;
+  border-color:#37404a;
+  color:#4bda44ef;
+}
+body.dark #online-users h4{color:#ffffff}
+
+/*Custom loader of message skeleton*/
+.custom-loader {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: 
+    radial-gradient(farthest-side,#8B2FFF 94%,#0000) top/4px 4px no-repeat,
+    conic-gradient(#0000 30%,#8B2FFF);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 4px),#000 0);
+  animation: s3 1s infinite linear;
+}
+
+@keyframes s3 {
+  100% { transform: rotate(1turn); }
+}
+
+.loader-center {
+  margin: 2rem auto;
+}
+.custom-loader.fade-out {
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 
