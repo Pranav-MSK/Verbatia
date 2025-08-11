@@ -109,18 +109,58 @@ verbatia-app/
 Make sure to use secure rules to restrict message reads/writes:
 
 ```js
-rules_version = '2';
+rules_version = '2'; //Production Rules
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    match /messages/{message} {
+
+    // =======================
+    // MESSAGES COLLECTION
+    // =======================
+    match /messages/{messageId} {
+      // Only authenticated users can read messages
       allow read: if request.auth != null;
-      allow create: if request.auth != null && 
-                    request.resource.data.userId == request.auth.uid;
+
+      // Create: must be from authenticated user and meet data rules
+      allow create: if request.auth != null &&
+        request.resource.data.keys().hasOnly(['text', 'uid', 'timestamp']) &&
+        request.resource.data.text is string &&
+        request.resource.data.text.size() > 0 &&
+        request.resource.data.text.size() <= 100 &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.timestamp is timestamp;
+
+      // Update: only owner can update and must keep same uid + valid data
+      allow update: if request.auth != null &&
+        resource.data.uid == request.auth.uid &&
+        request.resource.data.keys().hasOnly(['text', 'uid', 'timestamp']) &&
+        request.resource.data.text is string &&
+        request.resource.data.text.size() > 0 &&
+        request.resource.data.text.size() <= 100 &&
+        request.resource.data.uid == resource.data.uid &&
+        request.resource.data.timestamp is timestamp;
+
+      // Delete: only the owner can delete
+      allow delete: if request.auth != null &&
+        resource.data.uid == request.auth.uid;
     }
 
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    // =======================
+    // USERS ONLINE COLLECTION
+    // =======================
+    match /usersOnline/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null &&
+        request.auth.uid == userId &&
+        request.resource.data.keys().hasOnly(['lastActive']) &&
+        request.resource.data.lastActive is timestamp;
+    }
+
+    // =======================
+    // DENY EVERYTHING ELSE
+    // =======================
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
