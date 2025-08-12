@@ -11,7 +11,7 @@ import {
 
 // Your Firebase config (replace with your actual config)
 const firebaseConfig = {
-  apiKey: "AIzaSyBaRgQhYQfQYD88GA4B2oN0hZtnI4UypZ4",
+  apiKey: "Enter API Key",
   authDomain: "realtimechatapp-d92ab.firebaseapp.com",
   projectId: "realtimechatapp-d92ab",
   storageBucket: "realtimechatapp-d92ab.firebasestorage.app",
